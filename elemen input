@@ -1,0 +1,140 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: InputForm(),
+    );
+  }
+}
+
+class InputForm extends StatefulWidget {
+  @override
+  _InputFormState createState() => _InputFormState();
+}
+
+class _InputFormState extends State<InputForm> {
+  String selectedGender = 'Male';
+  bool isStudent = false;
+  bool isEmployed = false;
+  bool isSwitched = false;
+
+  List<String> countries = ['USA', 'Canada', 'UK', 'Australia'];
+  String selectedCountry = 'USA';
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Input Form'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Gender:'),
+            Row(
+              children: [
+                Radio(
+                  value: 'Male',
+                  groupValue: selectedGender,
+                  onChanged: (value) {
+                    setState(() {
+                      selectedGender = value.toString();
+                    });
+                  },
+                ),
+                Text('Male'),
+                Radio(
+                  value: 'Female',
+                  groupValue: selectedGender,
+                  onChanged: (value) {
+                    setState(() {
+                      selectedGender = value.toString();
+                    });
+                  },
+                ),
+                Text('Female'),
+              ],
+            ),
+            SizedBox(height: 16.0),
+            Text('Employment Status:'),
+            Row(
+              children: [
+                Checkbox(
+                  value: isStudent,
+                  onChanged: (value) {
+                    setState(() {
+                      isStudent = value!;
+                    });
+                  },
+                ),
+                Text('Student'),
+                Checkbox(
+                  value: isEmployed,
+                  onChanged: (value) {
+                    setState(() {
+                      isEmployed = value!;
+                    });
+                  },
+                ),
+                Text('Employed'),
+              ],
+            ),
+            SizedBox(height: 16.0),
+            Text('Country:'),
+            DropdownButton<String>(
+              value: selectedCountry,
+              onChanged: (value) {
+                setState(() {
+                  selectedCountry = value!;
+                });
+              },
+              items: countries.map((String country) {
+                return DropdownMenuItem<String>(
+                  value: country,
+                  child: Text(country),
+                );
+              }).toList(),
+            ),
+            SizedBox(height: 16.0),
+            Text('Enable Feature:'),
+            Row(
+              children: [
+                Text('Off'),
+                Switch(
+                  value: isSwitched,
+                  onChanged: (value) {
+                    setState(() {
+                      isSwitched = value;
+                    });
+                  },
+                ),
+                Text('On'),
+              ],
+            ),
+            SizedBox(height: 16.0),
+            ElevatedButton(
+              onPressed: () {
+                // Logic to save form data
+                // For demonstration purposes, just print the values
+                print('Gender: $selectedGender');
+                print('Student: $isStudent');
+                print('Employed: $isEmployed');
+                print('Country: $selectedCountry');
+                print('Feature Enabled: $isSwitched');
+              },
+              child: Text('Save Data'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
